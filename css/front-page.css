@@ -1,0 +1,117 @@
+* {
+  font-family: 'Proxima Nova', sans-serif;
+}
+body {
+  background-color: #252525;
+}
+
+.container {
+  margin: 0 auto;
+  max-width: 80%;
+}
+
+.header-logo {
+  transition: .4s;
+  display: block;
+  width: 75px;
+  height: 75px;
+  margin: 20px auto 0 auto;
+}
+
+.header-logo-text {
+  transition: .4s;
+  text-align: center;
+  margin-bottom: 10px;
+  color: white;
+  font-weight: 300;
+  font-size: 2rem;
+}
+
+.header-subtext {
+  transition: .4s;
+  text-align: center;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #4a4a4a;
+}
+
+.search-wrapper {
+  text-align: center;
+}
+
+.js-query {
+  width: 100%;
+  height: 30px;
+  font-size: 16px;
+  padding-left: 15px;
+  border-radius: 2px;
+  border: solid 1px gray;
+}
+
+.js-query::placeholder {
+  font-style: italic;
+}
+
+.js-query:focus {
+  outline: none;
+}
+
+.search-movies-submit {
+  transition: .4s;
+  vertical-align: top;
+  padding: 9px 25px;
+  letter-spacing: 2px;
+  background: none;
+  border-radius: 2px;
+  border: solid 1px #59fe91;
+  color: #ddd;
+  font-family: "Proxima Nova", sans-serif;
+  font-weight: 300;
+  font-size: 14px;
+  margin-top: 20px;
+}
+
+.search-movies-submit:hover {
+  color: white;
+  cursor: pointer;
+  border: solid 1px #1ef768;
+}
+
+/* Larger than mobile */
+@media (min-width: 400px) {}
+
+/* Larger than phablet */
+@media (min-width: 550px) {
+
+}
+/* Larger than tablet */
+@media (min-width: 750px) {
+  .container {
+    margin: 0 auto;
+    width: 960px;
+  }
+  .header-logo {
+    margin: 60px auto 0 auto;
+    width: 100px;
+    height: 100px;
+  }
+
+  .header-logo-text {
+    font-size: 3rem;
+    margin-top: 10px;
+  }
+
+  .js-query {
+    width: 40%;
+  }
+
+  .search-movies-submit {
+    margin: 0 0 0 5px;
+  }
+}
+
+/* Larger than desktop */
+@media (min-width: 1000px) {}
+
+/* Larger than Desktop HD */
+@media (min-width: 1200px) {}
