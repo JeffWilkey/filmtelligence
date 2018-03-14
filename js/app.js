@@ -31,7 +31,6 @@ function getMovieFromApi(movieId, callback) {
     api_key: API_KEY
   }
   $.getJSON(TMDB_MOVIE_URL + movieId, query, callback );
-
 }
 
 // Return the movie object to the render function
@@ -77,6 +76,7 @@ function removeFrontPage() {
 
 // Render all HTML and styles associated with movie
 function returnAndRenderMovie(movie) {
+  console.log(movie);
   removeFrontPage();
   renderMoviePage(movie);
   determineScoreBoxColor(movie);
