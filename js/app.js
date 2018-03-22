@@ -143,7 +143,7 @@ function renderMoviePage(movie) {
 // Set the movie's score box color dynamically based on it's rating
 function determineScoreBoxColor(movie) {
   if (movie.vote_average >= 7) {
-    $(".score-box").css("background-color", "#55efc4");
+    $(".score-box").css("background-color", "#2ecc71");
   } else if (movie.vote_average >= 4) {
     $(".score-box").css("background-color", "#fdcb6e");
   } else if (movie.vote_average >= 0) {
