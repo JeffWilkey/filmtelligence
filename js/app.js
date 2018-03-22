@@ -103,6 +103,7 @@ function renderMoviePage(movie) {
       <div class="container">
         <form class="js-search">
           <label for="movie-search">Search</label>
+          <span class="fa fa-search"></span>
           <input type="text" id="movie-search" class="js-query wide" placeholder="Search Movie">
         </form>
       </div>
