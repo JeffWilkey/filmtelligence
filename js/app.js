@@ -97,7 +97,7 @@ function renderMoviePage(movie) {
   console.log(movie);
   $("body").html(`
     <header class="logo-banner" role="banner">
-      <img src="./img/reel.png" alt="Filmtelligence logo">
+      <img src="./img/Reel.png" alt="Filmtelligence logo">
     </header>
     <div class="search-row">
       <div class="container">
