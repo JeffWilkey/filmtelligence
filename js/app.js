@@ -55,7 +55,7 @@ function renderFrontPage() {
       <form class="js-search">
         <div class="search-wrapper">
           <label for="movie-search" hidden>Search</label>
-          <input id="movie-search" type="text" class="js-query" placeholder="Fight Club" value="Fight Club"/>
+          <input id="movie-search" type="text" class="js-query" placeholder="Fight Club"/>
           <button class="search-movies-submit" type="submit">Search</button>
         </div>
       </form>
