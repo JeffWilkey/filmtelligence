@@ -1,10 +1,10 @@
 # Filmtelligence
 [teeny-cows.surge.sh](http://teeny-cows.surge.sh)  
 
-### Front Page  
+### Front Page (Design)
 ![Front Page](https://i.imgur.com/BOmkfHC.png)
 
-### Movie Show Page
+### Movie Show Page (Design)
 ![Movie Show Page](https://i.imgur.com/yitHTVO.png)
 
 ### App Description
