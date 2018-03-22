@@ -54,7 +54,7 @@ function renderFrontPage() {
       <h4 class="header-subtext">Search for a Movie or TV show and we'll return intel on it.</h4>
       <form class="js-search">
         <div class="search-wrapper">
-          <label for="movie-search" hidden>Search</label>
+          <label for="movie-search">Search</label>
           <input id="movie-search" type="text" class="js-query" placeholder="Fight Club"/>
           <button class="search-movies-submit" type="submit">Search</button>
         </div>
