@@ -102,11 +102,12 @@ function renderMoviePage(movie) {
     <div class="search-row">
       <div class="container">
         <form class="js-search">
-          <input type="text" class="js-query wide" placeholder="Search Movie">
+          <label for="movie-search">Search</label>
+          <input type="text" id="movie-search" class="js-query wide" placeholder="Search Movie">
         </form>
       </div>
     </div>
-    <main role="main">
+    <main role="main" aria-live="assertive">
       <div class="movie-info-wrapper">
       </div>
     </main>
@@ -173,7 +174,7 @@ function renderCastCards(cast) {
   for (let i = 0; i < 5; i++) {
     $(".credits-cast-wrapper").append(`
       <div class="credits-cast-card">
-        <img class="credits-cast-card-profile" src="https://image.tmdb.org/t/p/w500${cast[i].profile_path}">
+        <img class="credits-cast-card-profile" src="https://image.tmdb.org/t/p/w500${cast[i].profile_path}" alt="${cast[i].name}">
         <p class="credits-cast-card-name"><strong>${cast[i].name}</strong></p>
         <p class="credits-cast-card-character">${cast[i].character}</p>
       </div>
