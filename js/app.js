@@ -1,7 +1,6 @@
 const TMDB_SEARCH_URL = 'https://api.themoviedb.org/3/search/movie'
 const TMDB_MOVIE_URL = 'https://api.themoviedb.org/3/movie/'
 const API_KEY = "78cb36c6b59ca43ebda01b258e8ff0d1"
-let currentMovie = {}
 
 // Search and API Functionality
 function watchSubmit() {
@@ -26,21 +25,27 @@ function getDataFromApi(searchTerm, callback) {
 
 // Get the movie object
 function getMovieFromApi(movieId, callback) {
-  let movie = {};
   const query = {
     api_key: API_KEY
   }
   $.getJSON(TMDB_MOVIE_URL + movieId, query, callback );
 }
 
-// Return the movie object to the render function
-function getMovie(result) {
-  getMovieFromApi(result.results[0].id, returnAndRenderMovie)
+// Get the movie's credits
+function getCreditsFromApi(movieId, callback) {
+  const query = {
+    api_key: API_KEY
+  }
+  $.getJSON(TMDB_MOVIE_URL + movieId + "/credits", query, callback)
 }
 
+// Return the movie and credits objects to their respective render functions
+function getMovie(result) {
+  getMovieFromApi(result.results[0].id, returnAndRenderMovie)
+  getCreditsFromApi(result.results[0].id, returnAndRenderCast)
+}
 
-// Front Page Functionality
-
+// Render the front page
 function renderFrontPage() {
   $(".container").html(`
     <header role="banner">
@@ -49,7 +54,8 @@ function renderFrontPage() {
       <h4 class="header-subtext">Search for a Movie or TV show and we'll return intel on it.</h4>
       <form class="js-search">
         <div class="search-wrapper">
-          <input type="text" class="js-query" placeholder="Fight Club" value="Fight Club"/>
+          <label for="movie-search" hidden>Search</label>
+          <input id="movie-search" type="text" class="js-query" placeholder="Fight Club" value="Fight Club"/>
           <button class="search-movies-submit" type="submit">Search</button>
         </div>
       </form>
@@ -72,19 +78,23 @@ function removeFrontPage() {
   $(".container").remove();
 }
 
-
-
-// Render all HTML and styles associated with movie
+// Remove front page contents then render all HTML and styles associated with movie's basic information
 function returnAndRenderMovie(movie) {
-  console.log(movie);
   removeFrontPage();
   renderMoviePage(movie);
   determineScoreBoxColor(movie);
+  renderFacts(movie);
   watchSubmit();
 }
 
-// Render HTML and CSS around the result (Movie)
+// Render the cast as well
+function returnAndRenderCast(cast) {
+  renderCast(cast)
+}
+
+// Render the initial movie information, (poster, overview, ratings, etc.) cast comes later
 function renderMoviePage(movie) {
+  console.log(movie);
   $("body").html(`
     <header class="logo-banner" role="banner">
       <img src="./img/reel.png" alt="Filmtelligence logo">
@@ -111,7 +121,7 @@ function renderMoviePage(movie) {
         <img class="poster" src="https://image.tmdb.org/t/p/w500${movie.poster_path}" alt="${movie.original_title} Poster">
       </div>
       <div class="movie-header-right">
-        <h1 class="movie-title"> ${movie.original_title} <span class="movie-year">(${movie.release_date.substring(0, 4)})</span> </h1>
+        <h1 class="movie-title"> ${movie.original_title} <span class="movie-year">(${moment(movie.release_date).format("YYYY")})</span> </h1>
         <p class="movie-overview">${movie.overview}</p>
         <hr/>
         <div class="movie-reception-left">
@@ -129,6 +139,7 @@ function renderMoviePage(movie) {
   `)
 }
 
+// Set the movie's score box color dynamically based on it's rating
 function determineScoreBoxColor(movie) {
   if (movie.vote_average >= 7) {
     $(".score-box").css("background-color", "#55efc4");
@@ -139,11 +150,95 @@ function determineScoreBoxColor(movie) {
   }
 }
 
+// Render the wrapper that will contain the top billed cast
+function renderCast(result) {
+  console.log(result);
+  let cast = result.cast;
 
+  $('<div class="credits-wrapper"></div>').insertAfter(".movie-info-wrapper");
+  $(".credits-wrapper").append(`
+    <div class="container">
+      <h2 class="credits-header">Top Billed Cast</h2>
+      <div class="credits-cast-wrapper">
 
+      </div>
+    </div>
+  `);
+  renderCastCards(cast);
+  setCardHeights();
+}
+
+// Take movie cast as argument then render top billed cast cards (5)
+function renderCastCards(cast) {
+  for (let i = 0; i < 5; i++) {
+    $(".credits-cast-wrapper").append(`
+      <div class="credits-cast-card">
+        <img class="credits-cast-card-profile" src="https://image.tmdb.org/t/p/w500${cast[i].profile_path}">
+        <p class="credits-cast-card-name"><strong>${cast[i].name}</strong></p>
+        <p class="credits-cast-card-character">${cast[i].character}</p>
+      </div>
+    `);
+  }
+}
+
+// Make card heights consistant by grabbing the tallest card and setting each other card's height to match
+function setCardHeights() {
+  if($(window).width() < 750) {
+    $('.credits-cast-card').height(400);
+  }
+
+  calculateCardHeights();
+  $(window).resize(function() {
+    if ($(window).width() < 750) {
+      $('.credits-cast-card').height(400);
+    } else {
+      $('.credits-cast-card').css("height", "100%");
+      calculateCardHeights();
+    }
+  })
+}
+
+function calculateCardHeights() {
+  // Get an array of all card heights
+  let cardHeights = $('.credits-cast-card').map(function() {
+    return $(this).height();
+  }).get();
+
+  // Math.max takes a variable number of arguments
+  // `apply` is equivalent to passing each height as an argument
+  let maxHeight = Math.max.apply(null, cardHeights)
+
+  // Set each card's height to match maxHeight
+  $('.credits-cast-card').height(maxHeight);
+}
+
+function renderFacts(movie) {
+  $('<div class="facts-wrapper"></div>').insertAfter(".movie-info-wrapper");
+  $('.facts-wrapper').append(`
+    <div class="container">
+      <h2 class="facts-header">Facts</h2>
+      <div class="facts-divider"></div><br>
+      <div class="facts-info-container">
+        <p class="fact"><span class="fact-header">Status:</span> <span class="fact-info">${movie.status}</span></p>
+        <p class="fact"><span class="fact-header">Release Date:</span> <span class="fact-info">${moment(movie.release_date).format("MMMM Do, YYYY")}</span></p>
+        <p class="fact"><span class="fact-header">Original Language:</span> <span class="fact-info">${movie.original_language === 'en' ? "English" : movie.original_language}</span></p>
+        <p class="fact"><span class="fact-header">Runtime:</span> <span class="fact-info">${movie.runtime} mins</span></p>
+        <p class="fact"><span class="fact-header">Budget:</span> <span class="fact-info">$${formatNumber(movie.budget)}</span></p>
+        <p class="fact"><span class="fact-header">Revenue:</span> <span class="fact-info">$${formatNumber(movie.revenue)}</span></p>
+      </div>
+    </div>
+  `)
+}
+
+function formatNumber(num) {
+  return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
+// Render the front page and watch for a submission
 function initializeApp() {
   renderFrontPage();
   watchSubmit();
 }
 
+// Initialize the app
 initializeApp();

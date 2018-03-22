@@ -76,10 +76,12 @@ body {
 
 .movie-overview {
   font-size: 1rem;
+  max-height: 130px;
   color: white;
   font-weight: 100;
   line-height: 1.6rem;
   margin-bottom: 30px;
+  overflow: scroll;
 }
 .movie-reception-left {
   display: inline-block;
@@ -124,10 +126,81 @@ body {
   color: white;
 }
 
+.credits-wrapper {
+  min-height: 100px;
+  background-color: white;
+  padding: 20px 0 60px 0;
+  margin-top: 500px;
+}
+
+.credits-header {
+  margin-top: 0;
+}
+.credits-cast-wrapper {
+  text-align: center;
+}
+
+.credits-cast-card {
+  display: inline-block;
+  width: 80%;
+  margin: 20px 15px;
+  vertical-align: top;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  text-align:left;
+}
+
+.credits-cast-card-profile {
+  width: 100%;
+  max-height: 300px;
+  object-fit: cover;
+}
+
+.credits-cast-card-name {
+  margin: 30px 0 0 15px;
+}
+.credits-cast-card-character {
+  margin: 5px 0 30px 15px;
+}
+
 hr {
   border: none;
   border-bottom: 1px solid #777;
 }
+
+.facts-wrapper {
+  min-height: 100px;
+  text-align: center;
+  padding-bottom: 50px;
+}
+.facts-header {
+  color: white;
+  font-weight: 600;
+  font-size: 1.8rem;
+  margin-bottom: 0;
+}
+.facts-divider {
+  display: inline-block;
+  height: 2px;
+  border-radius: 1px;
+  background-color: white;
+  width: 100px;
+}
+.facts-info-container {
+  display: inline-block;
+  width: 80%;
+  text-align: left;
+}
+.fact {
+  color: white;
+  font-size: 1.1rem;
+}
+.fact-header {
+  font-weight: bold;
+}
+.fact-info {
+  color: #a9a9a9;
+}
+
 /* Larger than mobile */
 @media (min-width: 400px) {}
 
@@ -175,6 +248,28 @@ hr {
 
   .score-box {
     margin: 13px 40px 0 0;
+  }
+  .credits-wrapper {
+    margin-top: 0;
+  }
+
+  .credits-cast-card {
+    width: 16%;
+    margin: 0 15px;
+  }
+
+  .credits-cast-card-profile {
+    height: 170px;
+  }
+  .credits-cast-card-name {
+    margin: 10px 0 0 15px;
+  }
+  .credits-cast-card-character {
+    margin: 5px 0 15px 15px;
+  }
+
+  .facts-info-container {
+    width: 30%;
   }
 
 }
